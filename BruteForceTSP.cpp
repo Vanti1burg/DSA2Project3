@@ -74,8 +74,10 @@ using namespace std;
      bool BruteForceTSP:: perm1(int s[], int numElements) {
 
         int m= numElements-2;
+
         //finds the rightest pair of cities that are increasing in order, if
         //none then we have made all permutations 
+
         while(m>=0 && s[m]>s[m+1]) {
 
             m=m-1;
@@ -95,13 +97,17 @@ using namespace std;
             k=k-1;
 
         }
+
    //swaps the cities at m and k to make the next tour
+
         swap (s[m],s[k]);
 
         int p = m+1;
 
         int q = numElements-1;
-//swaps the cities to the right of m to make the next tour
+
+    //swaps the cities to the right of m to make the next tour
+
         while(p<q) {
 
             swap(s[p],s[q]);
@@ -111,8 +117,10 @@ using namespace std;
             q--;
 
         }
-//returns true for the next tour generated
-// this function is used over and over again with tour modified each time then ran back through again
+
+    //returns true for the next tour generated
+    // this function is used over and over again with tour modified each time then ran back through again
+
 
         return true;
     }
@@ -120,8 +128,10 @@ using namespace std;
 
 
 
-//this is the actual brute force algorithm that does the legwork of making all tours then finding the best one
+    //this is the actual brute force algorithm that does the legwork of making all tours then finding the best one
+
     double BruteForceTSP:: bruteForce(int n) {
+
 
         //initial tour with cities max amount of cities
         //we will only use the first n cities for the tour
@@ -129,7 +139,9 @@ using namespace std;
         //due to the time expenditure
 
         int tour[20];
-//ensures the tour has the correct starting city of 0
+
+        //ensures the tour has the correct starting city of 0
+
         tour[0] = 0;
 
         for (int i = 1; i < n; i++) {
@@ -140,9 +152,13 @@ using namespace std;
 
 
         }
+
         //calculate the cost of the first tour and uses it as baseline for best tour
+
         double minCost = calculateCost(tour, n);
+
         //sets the best tour to the first tour to initilize it
+
         bestTour = vector<int>(tour, tour + n);
 
         //generates all the tours by permuting the cities then comparing costs to find the best one
@@ -155,7 +171,9 @@ using namespace std;
             if (cost < minCost) {
 
                 minCost = cost;
+
                 //the +n is needed to only take in the correct amount of cities
+
                 bestTour = vector<int>(tour, tour + n);
 
             }
@@ -165,6 +183,7 @@ using namespace std;
     }
 
 // prints the best tour and also its cost
+
      void BruteForceTSP::printBestTour() {
 
         cout<<"Best TSP TOUR: ";

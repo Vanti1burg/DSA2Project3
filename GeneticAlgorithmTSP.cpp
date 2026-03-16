@@ -31,9 +31,11 @@ using namespace std;
                 }
 
            //shuffle the cities in the tour to create random mixing of tours for intital population
+
                 random_shuffle(population[i].begin() + 1, population[i].end()); 
             }
             // resize the fitness vector to the appropriate population size
+
                 fitness.resize(populationSize);
 
         }
@@ -73,7 +75,8 @@ using namespace std;
 
     }
 
-//calculate cost function similar to the one in the BF algorithm
+    //calculate cost function similar to the one in the BF algorithm
+    
     double GeneticAlgorithmTSP:: calculateCost(const vector<int>& tour) {
 
         
@@ -92,10 +95,11 @@ using namespace std;
 
     //selects parents for crossover based on fitness values, uses pseudo random selection weighted by fitness
     //higher fitness means higher chance of being a parent
+
  void GeneticAlgorithmTSP:: selectParents(int& parent1, int& parent2) {
           
            double totalFitness=0;
-// from 0 to population size, add up all fitness values 
+    // from 0 to population size, add up all fitness values 
             for(int i=0; i<populationSize;i++){
                 totalFitness+=fitness[i];
 
@@ -128,7 +132,7 @@ using namespace std;
   }
 
 
-  //evaluates the fitness of each tour in population by taking inverse of cost
+    //evaluates the fitness of each tour in population by taking inverse of cost
   
   void GeneticAlgorithmTSP::evaluateFitness() {
 
@@ -139,18 +143,29 @@ using namespace std;
           }
   }
 
-//crossover method to create a "child" tour from two parents tours
+    //crossover method to create a "child" tour from two parents tours
+
   void GeneticAlgorithmTSP::crossover(int parent1, int parent2, vector<int>& child) {
-//makes sure the starting city is 0
+
+    //makes sure the starting city is 0
+
     child[0] = 0;
-//keeps track of the cities that have been added already so we dont get repeating cities 
+
+    //keeps track of the cities that have been added already so we dont get repeating cities 
+
     vector<bool> inChild(numCities, false);
-//mark city 0 as true since we already set it
+
+    //mark city 0 as true since we already set it
+
     inChild[0] = true; 
-//randomly select start and end point from parent 1 for crossover
+
+    //randomly select start and end point from parent 1 for crossover
+
     int start = 1 + rand() % (numCities - 1);
-//rnadomly select end point from parent1 for crossover, ensure end point is after start point
+    //rnadomly select end point from parent1 for crossover, ensure end point is after start point
+
     int end = 1 + rand() % (numCities - 1);
+
 
     if (start > end) swap(start, end);
 
@@ -165,7 +180,7 @@ using namespace std;
 
    //fill the remaining cities from the second parent as long as they havent already been added 
     int index = 1;
-    //i
+    
     for (int i = 1; i < numCities; i++) {
 
         if (!inChild[population[parent2][i]]) {
@@ -228,10 +243,15 @@ void GeneticAlgorithmTSP::geneticAlgo(int generations) {
                vector<int> child(numCities,-1);
             
                //fill the child with -1 to show that cities havent been added yet
+
                fill(child.begin(),child.end(),-1);
+
                 //create child tour through the crossover of parents
+
                 crossover(parent1,parent2,child);
+
                 //mutate the child tour to add some possible random changes
+
                 mutate(child);
 
                 int worstIndex=0;
@@ -276,6 +296,7 @@ void GeneticAlgorithmTSP::geneticAlgo(int generations) {
                 }
 
             }
+            bestCostReturn=bestCost;
             cout << "Best TSP Cost: " << bestCost << endl;
 
         }
@@ -295,3 +316,9 @@ void GeneticAlgorithmTSP::geneticAlgo(int generations) {
 
             cout<<endl;
         }
+
+    double GeneticAlgorithmTSP::getBestCost() {
+        
+           return bestCostReturn;
+
+    }
